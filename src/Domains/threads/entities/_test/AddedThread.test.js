@@ -4,7 +4,7 @@ describe("Added thread Entities", () => {
   it("should throw error when payload did not contain needed property", () => {
     const payload = {
       title: "title",
-      sender: "sender-id",
+      sender: "user-id",
     };
 
     expect(() => new AddedThread(payload)).toThrowError(
