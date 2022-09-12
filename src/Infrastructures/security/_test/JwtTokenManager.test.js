@@ -80,4 +80,25 @@ describe('JwtTokenManager', () => {
       expect(expectedUsername).toEqual('dicoding');
     });
   });
+
+  describe('verifyAccessToken function', () => {
+    it('should throw invariant error when verification failed', async () => {
+      const jwtTokenManager = new JwtTokenManager(Jwt.token);
+      const accessToken = await jwtTokenManager.createRefreshToken({username: "dicoding"});
+
+      await expect(jwtTokenManager.verifyAccessToken(accessToken))
+      .rejects
+      .toThrow(InvariantError);
+    });
+
+    it('should not throw invariant error when access token verified', async () => {
+      
+      const jwtTokenManager = new JwtTokenManager(Jwt.token);
+      const accessToken = await jwtTokenManager.createAccessToken({username: "dicoding"});
+
+      await expect(jwtTokenManager.verifyAccessToken(accessToken))
+      .resolves
+      .not.toThrow(InvariantError);
+    });
+  });
 });
